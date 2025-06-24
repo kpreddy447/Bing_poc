@@ -106,7 +106,7 @@ if path1 and path2:
         st.markdown("### Comparison Summary")
         st.write(comparison_text)
 else:
-    st.info("Generate both graphs to enable comparison.")
+    st.info("Generate both graphs for analysis.")
 
 
 # import streamlit as st

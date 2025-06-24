@@ -16,34 +16,6 @@ def image_to_base64(path):
     with open(path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
 
-# def compare_images(img1_path, img2_path):
-#     img1_b64 = image_to_base64(img1_path)
-#     img2_b64 = image_to_base64(img2_path)
-
-#     response = client.chat.completions.create(
-#         model=os.getenv("AZURE_OPENAI_DEPLOYMENT"),  
-#         messages=[
-#             {"role": "system", "content": "In 3-5 bullter points Summarize differences the two graphs at same day of the week.Any assumptions as to why it might happened"},
-#             {
-#                 "role": "user",
-#                 "content": [
-#                     {"type": "text", "text": (
-#                             "These two line charts show data for two different weeks (Monday to Sunday). "
-#                             "Extract numeric values for each day (Mon–Sun) from both charts. Then, compare "
-#                             "the same weekday (e.g., Monday vs Monday), and only list days where the difference "
-#                             "between Week 1 and Week 2 is large (e.g., >300 units).\n\n"
-#                             "Return the result as a markdown table with columns:\n\n"
-#                             "| Day | Week 1 Value | Week 2 Value | Difference | Comment |"
-#                         )},
-#                     {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{img1_b64}"}},
-#                     {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{img2_b64}"}}
-#                 ]
-#             }
-#         ],
-#         max_tokens=500
-#     )
-
-#     return response.choices[0].message.content
 
 def compare_images(img1_path, img2_path, restaurant_name=None, start_date_1=None, end_date_1=None, start_date_2=None, end_date_2=None):
     img1_b64 = image_to_base64(img1_path)
@@ -64,7 +36,7 @@ def compare_images(img1_path, img2_path, restaurant_name=None, start_date_1=None
 
         df["date_of_visit"] = df["date_of_visit"].astype(str)
         df["total_bill_amount"] = pd.to_numeric(df["total_bill_amount"], errors='coerce')
-        sample_data = df.head(100).to_csv(index=False)
+        sample_data = df.to_csv(index=False)
     else:
         sample_data = "No tabular data available."
 
@@ -80,19 +52,20 @@ Raw transaction data including:
 - Total bill amount
 - Date and time of visit
 
+### Sample data: {sample_data}
+
 ### Your Task:
-1. Identify any days of the week with large revenue differences (> $300) between charts.
+1. Identify any days of the given period with large revenue differences (> 30%) between charts.
 2. Analyze the tabular data to suggest **possible reasons**, such as:
-   - More customers on high-revenue days
+   - More customers on high-revenue days 
    - Presence of very high-value bills
    - Fewer or no visits on low-revenue days
-   - Time-of-day clustering (e.g., lunch rush vs dinner)
-   - Any anomalies you detect
+
 
 ### Output:
 - Markdown table:
 
-| Day | Week 1 Value | Week 2 Value | Difference | Observation |
+| Period 1 timeline | Period 1 Value |Period 2 timeline | Period 2 Value | Difference | Observation |
 
 - 3–5 bullet points explaining what might have caused the differences.
 - Don’t make up facts—stick to the data provided.
@@ -122,3 +95,33 @@ if __name__ == "__main__":
     result = compare_images("graph1.png", "graph2.png")
     print(result)
 
+
+
+# def compare_images(img1_path, img2_path):
+#     img1_b64 = image_to_base64(img1_path)
+#     img2_b64 = image_to_base64(img2_path)
+
+#     response = client.chat.completions.create(
+#         model=os.getenv("AZURE_OPENAI_DEPLOYMENT"),  
+#         messages=[
+#             {"role": "system", "content": "In 3-5 bullter points Summarize differences the two graphs at same day of the week.Any assumptions as to why it might happened"},
+#             {
+#                 "role": "user",
+#                 "content": [
+#                     {"type": "text", "text": (
+#                             "These two line charts show data for two different weeks (Monday to Sunday). "
+#                             "Extract numeric values for each day (Mon–Sun) from both charts. Then, compare "
+#                             "the same weekday (e.g., Monday vs Monday), and only list days where the difference "
+#                             "between Week 1 and Week 2 is large (e.g., >300 units).\n\n"
+#                             "Return the result as a markdown table with columns:\n\n"
+#                             "| Day | Week 1 Value | Week 2 Value | Difference | Comment |"
+#                         )},
+#                     {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{img1_b64}"}},
+#                     {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{img2_b64}"}}
+#                 ]
+#             }
+#         ],
+#         max_tokens=500
+#     )
+
+#     return response.choices[0].message.content
