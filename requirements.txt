@@ -1,10 +1,13 @@
 streamlit
 pandas
-psycopg2-binary
+plotly
 python-dotenv
 openai
-azure-openai
-google-generativeai
+psycopg2-binary
+SQLAlchemy
+matplotlib
+seaborn
+kaleido
 Pillow
-plotly
 pytesseract
+scikit-learn
