@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-import google.generativeai as genai
+# import google.generativeai as genai
 from dotenv import load_dotenv
 import os
 import pytesseract
