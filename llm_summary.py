@@ -2,7 +2,7 @@ from openai import AzureOpenAI
 from dotenv import load_dotenv
 import os
 import base64
-from db_connector import load_data_from_postgres
+from db_connector import load_data_from_excel
 import pandas as pd
 load_dotenv()
 
