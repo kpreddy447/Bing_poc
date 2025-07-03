@@ -32,7 +32,8 @@ def compare_images(img1_path, img2_path, restaurant_name=None, start_date_1=None
               (date_of_visit BETWEEN %s AND %s)
           )
         """
-        df = load_data_from_postgres(query, params=(restaurant_name, start_date_1, end_date_1, start_date_2, end_date_2))
+        # df = load_data_from_postgres(query, params=(restaurant_name, start_date_1, end_date_1, start_date_2, end_date_2))
+        df = load_data_from_postgres("Customer_Visits_Data for BingPlaces.xlsv")
 
         df["date_of_visit"] = df["date_of_visit"].astype(str)
         df["total_bill_amount"] = pd.to_numeric(df["total_bill_amount"], errors='coerce')
