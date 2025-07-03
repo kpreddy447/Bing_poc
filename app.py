@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 from backend import analyze_graphs
-from db_connector import load_data_from_postgres
+from db_connector import load_data_from_excel
 import pandas as pd
 import plotly.express as px
 import os
