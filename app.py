@@ -17,7 +17,7 @@ if "chart_paths" not in st.session_state:
 # Load restaurant list
 query = 'SELECT DISTINCT restaurant_name FROM public.main_table'
 # restaurants_df = load_data_from_postgres(query)
-restaurants_df = load_data_from_postgres("Customer_Visits_Data for BingPlaces.xlsv")
+restaurants_df = load_data_from_excel("Customer_Visits_Data for BingPlaces.xlsv")
 
 restaurants_df.columns = restaurants_df.columns.str.strip()
 col_name = restaurants_df.columns[0]
